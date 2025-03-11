@@ -1,3 +1,22 @@
+#!/bin/bash
+exec 3>&1 4>&2
+trap 'exec 2>&4 1>&3' 0 1 2 3
+exec 1>/root/install-jmeter.log 2>&1
+# Everything below will go to the file '/root/install-jmeter.log'
+#https://serverfault.com/questions/103501/how-can-i-fully-log-all-bash-scripts-actions
+
+
+echo    "JMETER_HOME = ${JMETER_HOME}"
+echo    "JMETER_VERSION = ${JMETER_VERSION}"
+echo    "JMETER_DOWNLOAD_URL = ${JMETER_DOWNLOAD_URL}"
+echo    "JMETER_CMDRUNNER_VERSION = ${JMETER_CMDRUNNER_VERSION}"
+echo    "JMETER_CMDRUNNER_DOWNLOAD_URL = ${JMETER_CMDRUNNER_DOWNLOAD_URL}"
+echo    "JMETER_PLUGINS_MANAGER_VERSION = ${JMETER_PLUGINS_MANAGER_VERSION}"
+echo    "JMETER_PLUGINS_MANAGER_DOWNLOAD_URL = ${JMETER_PLUGINS_MANAGER_DOWNLOAD_URL}"
+echo    "JMETER_PLUGINS = ${JMETER_PLUGINS}"
+echo    "JMETER_MODE = ${JMETER_MODE}"
+echo    "................"
+
 #!/bin/sh
 # JMETER_VERSION=${JMETER_VERSION} 
 # JMETER_DOWNLOAD_URL=${JMETER_DOWNLOAD_URL}

@@ -1,6 +1,7 @@
 provider "aws" {
   profile = var.aws_profile
   region  = var.aws_region
+#  version = "5.19" #deprecated feature
 }
 
 resource "aws_instance" "jmeter_main" {
@@ -13,7 +14,7 @@ resource "aws_instance" "jmeter_main" {
   user_data = templatefile("${path.module}/install-jmeter.sh", {
     JMETER_HOME                         = var.jmeter_home,
     JMETER_VERSION                      = var.jmeter_version,
-    JMETER_DOWNLOAD_URL                 = "https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-${var.jmeter_version}.tgz",
+    JMETER_DOWNLOAD_URL                 = "https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${var.jmeter_version}.tgz",
     JMETER_CMDRUNNER_VERSION            = var.jmeter_cmdrunner_version,
     JMETER_CMDRUNNER_DOWNLOAD_URL       = "http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/${var.jmeter_cmdrunner_version}/cmdrunner-${var.jmeter_cmdrunner_version}.jar",
     JMETER_PLUGINS_MANAGER_VERSION      = var.jmeter_plugins_manager_version,
