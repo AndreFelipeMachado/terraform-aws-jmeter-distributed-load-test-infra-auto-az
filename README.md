@@ -20,8 +20,8 @@ This repo will help you to spin up an AWS EC2 instances with Java, JMeter, and J
 
 ```hcl
 module "jmeter-distributed-load-test-infra" {
- # source  = "QAInsights/jmeter-distributed-load-test-infra/aws"
-  source  = "./terraform-aws-jmeter-distributed-load-test-infra-auto-az"
+  source  = "AndreFelipeMachado/jmeter-distributed-load-test-infra-auto-az/aws/"
+#  source  = "./terraform-aws-jmeter-distributed-load-test-infra-auto-az"
 
   # insert the required variables here
   aws_region                   = "sa-east-1"
@@ -41,6 +41,8 @@ module "jmeter-distributed-load-test-infra" {
 ```
 
 By default, it will spin up an `t2.small` [not a free tier] instance with `sa-east-1` availability zone. Refer to the [AWS documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-types.html) for more information.
+
+At this version, the "public_subnet_cidrs" is the only type used at code, ignoring "private_subnet_cidrs" config.
 
 To configure other input variables, refer to the [documentation](https://registry.terraform.io/modules/QAInsights/jmeter/aws/latest?tab=inputs#optional-inputs).
 
