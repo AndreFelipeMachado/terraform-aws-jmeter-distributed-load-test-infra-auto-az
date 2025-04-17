@@ -15,12 +15,8 @@ echo    "JMETER_PLUGINS_MANAGER_VERSION = ${JMETER_PLUGINS_MANAGER_VERSION}"
 echo    "JMETER_PLUGINS_MANAGER_DOWNLOAD_URL = ${JMETER_PLUGINS_MANAGER_DOWNLOAD_URL}"
 echo    "JMETER_PLUGINS = ${JMETER_PLUGINS}"
 echo    "JMETER_MODE = ${JMETER_MODE}"
+echo    "JMETER_CONTROLLER_HEAP_SIZE_RAM_PERCENTAGE = ${JMETER_CONTROLLER_HEAP_SIZE_RAM_PERCENTAGE}"
 echo    "................"
-
-#!/bin/sh
-# JMETER_VERSION=${JMETER_VERSION} 
-# JMETER_DOWNLOAD_URL=${JMETER_DOWNLOAD_URL}
-# JMETER_HOME=${JMETER_HOME}
 
 echo "Installing Java"
 
@@ -65,6 +61,8 @@ if [ "${JMETER_MODE}" = "leader" ]; then
     source ${JMETER_HOME}/.bashrc
     export PRIVATE_IP=$(hostname -I | awk '{print $1}')
     echo "PRIVATE_IP=$PRIVATE_IP" >> /etc/environment
+    echo "JAVA_TOOL_OPTIONS=${JMETER_CONTROLLER_HEAP_SIZE_RAM_PERCENTAGE}" >> /etc/environment
+    export JAVA_TOOL_OPTIONS=${JMETER_CONTROLLER_HEAP_SIZE_RAM_PERCENTAGE}
 fi
 
 if [ "${JMETER_MODE}" = "follower" ]; then
@@ -74,3 +72,5 @@ if [ "${JMETER_MODE}" = "follower" ]; then
     echo "PRIVATE_IP=$PRIVATE_IP" >> /etc/environment
     jmeter -s -Dserver.rmi.localport=50000 -Dserver_port=1099 -Dserver.rmi.ssl.disable=true -Djava.rmi.server.hostname=$PRIVATE_IP -j /tmp/jmeter-server.log
 fi
+
+echo "Finished install."

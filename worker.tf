@@ -15,9 +15,10 @@ resource "aws_instance" "jmeter_worker" {
     JMETER_PLUGINS_MANAGER_DOWNLOAD_URL = "https://repo1.maven.org/maven2/kg/apc/jmeter-plugins-manager/${var.jmeter_plugins_manager_version}/jmeter-plugins-manager-${var.jmeter_plugins_manager_version}.jar",
     JMETER_PLUGINS                      = join(",", var.jmeter_plugins),
     JMETER_MODE                         = var.jmeter_mode
+    JMETER_CONTROLLER_HEAP_SIZE_RAM_PERCENTAGE = var.jmeter_controller_heap_size_ram_percentage
   })
   tags = {
-    Name = "jmeter_worker"
+    Name = "jmeter_worker_${count.index}"
   }
 
 

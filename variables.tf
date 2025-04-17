@@ -119,3 +119,56 @@ variable "jmeter_main_count" {
     error_message = "The leader/controller node must be 1."
   }
 } 
+
+variable "jmeter_controller_heap_size_ram_percentage" {
+  description = "The Jmeter controller heap size RAM percentage. Do not use heap size > 32GB as it will disable compressed Ordinary Object Pointers (OOPs)."
+  type        = string
+  default     = "-XX:MaxRAMPercentage=70"
+}
+
+variable "jmeter_influxdb_count" {
+  description = "The influxdb OSS node must be 1."
+  default     = 1
+  type        = number
+}
+
+variable "jmeter_influxdb_version"{
+  description = "The influxdb OSS version. Must be 1.x at this module version."
+  default =  "1.11.8"
+  type = string
+}
+
+variable "aws_influxdb_grafana_instance_type" {
+  description = "The type of worker instance(s) to start."
+  type        = string
+  default     = "m7g.large" #arm
+}
+
+variable "aws_influxdb_grafana_ami" {
+  # Debian 12 user=admin, beware of compatible instance type architecture
+  description = "ID of AMI to use for the instance AVAILABLE AT CHOSEN REGION"
+  type        = string
+  default     = "ami-0f55e4ab27ee52c57"
+  validation {
+    condition     = length(var.aws_influxdb_grafana_ami) > 4 && substr(var.aws_influxdb_grafana_ami, 0, 4) == "ami-"
+    error_message = "The image_id value must be a valid AMI id, starting with \"ami-\" available at your chosen region."
+  }
+}
+
+variable "aws_influxdb_grafana_instance_root_disk_size" {
+  description = "The root disk size (GB) of influxdb-grafana instance(s) to start."
+  type        = string
+  default     = "8"
+}
+
+variable "aws_influxdb_grafana_instance_root_disk_type" {
+  description = "The root disk type of influxdb-grafana instance(s) to start."
+  type        = string
+  default     = "gp3"
+}
+
+variable "aws_influxdb_grafana_instance_root_disk_encryption" {
+  description = "The root disk encryption enable/disable of influxdb-grafana instance(s) to start."
+  type        = bool
+  default     = false
+}
